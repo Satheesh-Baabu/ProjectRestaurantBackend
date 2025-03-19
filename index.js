@@ -24,7 +24,7 @@ const server = http.createServer(app); // Create HTTP server
 // Initialize Socket.IO
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173", // Make sure this matches your frontend URL
+        origin: ["http://localhost:5173","https://msvrestaurant.vercel.app"], // Make sure this matches your frontend URL
         methods: ["GET", "POST"]
     }
 });

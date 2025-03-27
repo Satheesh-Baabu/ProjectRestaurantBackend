@@ -44,7 +44,7 @@ exports.updateStatus = async (req, res) => {
         const updateOrder = await OrderModel.findByIdAndUpdate(id, { order_status: newStatus }, { new: true });
         const io = req.app.get("socketio");
         io.emit("new_supplier_order", updateOrder)
-
+        
         if (!updateOrder) {
             return res.status(404).json({ message: "Order not found" });
         }

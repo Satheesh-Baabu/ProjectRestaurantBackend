@@ -5,7 +5,6 @@ const dotenv = require("dotenv");
 const http = require("http");
 const { Server } = require("socket.io");
 
-// Import routes
 const authRoutes = require("./routes/authRoutes");
 const foodRoutes = require("./routes/foodRoutes");
 const qrRoutes = require("./routes/qrRoutes");

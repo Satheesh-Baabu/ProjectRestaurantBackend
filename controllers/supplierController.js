@@ -40,6 +40,8 @@ exports.supplierUpdates=async(req,res)=>{
             return res.status(400).json({ message: "Invalid status update" });
         }
         const updateOrder=await OrderModel.findByIdAndUpdate(id,{order_status:newStatus},{new:true})
+        const io = req.app.get("socketio");
+        io.emit("new_supplier_updates", updateOrder)
         if(!updateOrder)
             return res.status(404).json({message:"Order Not found"})
         return res.json({message:"Order Updated successfully"})

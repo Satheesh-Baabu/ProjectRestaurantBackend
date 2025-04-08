@@ -53,3 +53,28 @@ exports.supplierUpdates=async(req,res)=>{
     }
     
 }
+
+exports.supplierPaymentUpdates=async(req,res)=>{
+    try{
+        const {id}=req.params;
+        const {order_paymentstatus}=req.body;
+        let newStatus="";
+        if(order_paymentstatus==="Pending")
+            newStatus="Paid"
+        else {
+            return res.status(400).json({ message: "Invalid status update" });
+        }
+        const updateOrder=await OrderModel.findByIdAndUpdate(id,{payment_status:newStatus},{new:true})
+        const io = req.app.get("socketio");
+        io.emit("new_supplier_updates", updateOrder)
+        if(!updateOrder)
+            return res.status(404).json({message:"Order Not found"})
+        return res.json({message:"Order Updated successfully"})
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.status(500).json({ error: "Failed to update payment" });
+    }
+
+}

@@ -39,14 +39,7 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "12hr" }
     );
-
-    const refreshToken = jwt.sign(
-      { id: user._id },
-      process.env.JWT_REFRESH_SECRET,
-      { expiresIn: "7d" }
-    );
-
-    res.json({ accessToken, refreshToken });
+    res.json({ accessToken });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
